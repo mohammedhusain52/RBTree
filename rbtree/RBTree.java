@@ -101,7 +101,6 @@ public class RBTree {
                 } 
                 if (node == node.parent.right) {
                     System.out.println("Insertion Case 3 executed");
-                    //Double rotation needed
                     node = node.parent;
                     rcount+=1;
                     flag=1;
@@ -223,7 +222,7 @@ public class RBTree {
     boolean delete(Node z){
         if((z = findNode(z, root))==null)return false;
         Node x;
-        Node y = z; // temporary reference y
+        Node y = z; 
         int y_original_color = y.color;
         
         if(z.left == nil){
@@ -345,9 +344,9 @@ public class RBTree {
             Node node;
             switch (choice) {
                 case 1:
-                    System.out.println("Enter element to insert(insert -1 to terminate)");
+                    System.out.println("Enter element to insert(insert -9999 to terminate)");
                     item = scan.nextInt();
-                    while (item != -1) {
+                    while (item != -9999) {
                         node = new Node(item);
                         insert(node);
                         item = scan.nextInt();

@@ -82,7 +82,7 @@ public class RBTree {
             fixTree(node);
         }
     }
-
+    
     private void fixTree(Node node) {
         int flag=0;
         while (node.parent.color == RED) {
@@ -220,9 +220,12 @@ public class RBTree {
     }
     
     boolean delete(Node z){
+        rcount=0;
+        rdouble=0;
+        ccount=0;
         if((z = findNode(z, root))==null)return false;
         Node x;
-        Node y = z; 
+        Node y = z; // temporary reference y
         int y_original_color = y.color;
         
         if(z.left == nil){
@@ -260,12 +263,15 @@ public class RBTree {
                     System.out.println("Delete FixUp Case 3.1 Executed");
                     w.color = BLACK;
                     x.parent.color = RED;
+                    ccount+=2;
+                    rcount+=1;
                     rotateLeft(x.parent);
                     w = x.parent.right;
                 }
                 if(w.left.color == BLACK && w.right.color == BLACK){
                     System.out.println("Delete FixUp Case 3.2 Executed");
                     w.color = RED;
+                    ccount+=1;
                     x = x.parent;
                     continue;
                 }
@@ -273,6 +279,8 @@ public class RBTree {
                     System.out.println("Delete FixUp Case 3.3 Executed");
                     w.left.color = BLACK;
                     w.color = RED;
+                    ccount+=2;
+                    rcount+=1;
                     rotateRight(w);
                     w = x.parent.right;
                 }
@@ -281,6 +289,8 @@ public class RBTree {
                     w.color = x.parent.color;
                     x.parent.color = BLACK;
                     w.right.color = BLACK;
+                    ccount+=3;
+                    rcount+=1;
                     rotateLeft(x.parent);
                     x = root;
                 }
@@ -290,12 +300,15 @@ public class RBTree {
                     System.out.println("Delete FixUp Case 3.1 Executed");
                     w.color = BLACK;
                     x.parent.color = RED;
+                    ccount+=2;
+                    rcount+=1;
                     rotateRight(x.parent);
                     w = x.parent.left;
                 }
                 if(w.right.color == BLACK && w.left.color == BLACK){
                     System.out.println("Delete FixUp Case 3.2 Executed");
                     w.color = RED;
+                    ccount+=1;
                     x = x.parent;
                     continue;
                 }
@@ -303,6 +316,8 @@ public class RBTree {
                     System.out.println("Delete FixUp Case 3.3 Executed");
                     w.right.color = BLACK;
                     w.color = RED;
+                    ccount+=2;
+                    rcount+=1;
                     rotateLeft(w);
                     w = x.parent.left;
                 }
@@ -311,6 +326,8 @@ public class RBTree {
                     w.color = x.parent.color;
                     x.parent.color = BLACK;
                     w.left.color = BLACK;
+                    ccount+=3;
+                    rcount+=1;
                     rotateRight(x.parent);
                     x = root;
                 }
@@ -365,10 +382,13 @@ public class RBTree {
                     if (delete(node)) {
                         System.out.println("\nDeleted!");
                     } else {
-                        System.out.print("\nDoes not exist!");
+                        System.out.println("\nDoes not exist!");
                     }
-                    System.out.println();
                     printTree(root);
+                    System.out.println("Colour Count:"+ccount);
+                    System.out.println("Single Rotation Count:"+(rcount-2*rdouble));
+                    System.out.println("Double Rotation Count:"+rdouble);
+                    System.out.println("Total Rotation Count:"+rcount);
                     break;
                 case 3:
                     System.out.println("Enter Elemet to search:");

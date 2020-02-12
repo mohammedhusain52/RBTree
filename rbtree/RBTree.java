@@ -83,7 +83,6 @@ public class RBTree {
         }
     }
 
-    //Takes as argument the newly inserted node
     private void fixTree(Node node) {
         int flag=0;
         while (node.parent.color == RED) {
@@ -118,8 +117,6 @@ public class RBTree {
                     rdouble+=1;
                     flag=0;
                 }
-                //if the "else if" code hasn't executed, this
-                //is a case where we only need a single rotation 
                 rotateRight(node.parent.parent);
             } else {
                 uncle = node.parent.parent.left;
@@ -134,7 +131,6 @@ public class RBTree {
                 }
                 if (node == node.parent.left) {
                     System.out.println("Insertion Case 3 executed");
-                    //Double rotation needed
                     node = node.parent;
                     rcount+=1;
                     flag=1;
@@ -150,8 +146,6 @@ public class RBTree {
                     rdouble+=1;
                     flag=0;
                 }
-                //if the "else if" code hasn't executed, this
-                //is a case where we only need a single rotation
                 rotateLeft(node.parent.parent);
             }
         }
@@ -173,7 +167,7 @@ public class RBTree {
             }
             node.right = node.right.left;
             node.parent.left = node;
-        } else {//Need to rotate root
+        } else {
             Node right = root.right;
             root.right = right.left;
             right.left.parent = root;
@@ -199,7 +193,7 @@ public class RBTree {
             }
             node.left = node.left.right;
             node.parent.right = node;
-        } else {//Need to rotate root
+        } else {
             Node left = root.left;
             root.left = root.left.right;
             left.right.parent = root;
@@ -351,9 +345,9 @@ public class RBTree {
             Node node;
             switch (choice) {
                 case 1:
-                    System.out.println("Enter element to insert(insert -999 to terminate)");
+                    System.out.println("Enter element to insert(insert -1 to terminate)");
                     item = scan.nextInt();
-                    while (item != -999) {
+                    while (item != -1) {
                         node = new Node(item);
                         insert(node);
                         item = scan.nextInt();

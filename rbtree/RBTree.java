@@ -10,6 +10,7 @@ public class RBTree {
     int rcount = 0;
     int rdouble= 0;
     int search = 0;
+    int count=0;
     
     private class Node {
 
@@ -29,10 +30,22 @@ public class RBTree {
             return;
         }
         printTree(node.left);
-        System.out.print(((node.color==RED)?"Color: Red ":"Color: Black ")+"Key: "+node.key+" Parent: "+node.parent.key+"\n");
+        System.out.print(((node.color==RED)?"Color: Red ":"Color: Black ")+
+                "Key: "+node.key+" Parent: "+node.parent.key+"\n");
         printTree(node.right);
     }
-
+    
+    public int MaxHeight(Node node)
+    {   
+        if(node == null)
+            return -1;
+        if(node.color == BLACK)
+        {
+            count++;
+        }
+        return MaxHeight(node.left);
+    }
+    
     private Node findNode(Node findNode, Node node) {
         search+=1;
         if (root == nil) {
@@ -354,6 +367,7 @@ public class RBTree {
                     + "3.- Search Element\n"
                     + "4.- Print Tree\n"
                     + "5.- Delete Tree\n"
+                    + "6.- Maximum Height Tree\n"
                     + "0.- Exit\n");
             choice = scan.nextInt();
 
@@ -372,7 +386,9 @@ public class RBTree {
                     System.out.println("Colour Count:"+ccount);
                     System.out.println("Single Rotation Count:"+(rcount-2*rdouble));
                     System.out.println("Double Rotation Count:"+rdouble);
-                    System.out.println("Total Rotation Count:"+rcount);
+                    System.out.println("\nTotal Rotation Count:"+rcount);
+                    int a=MaxHeight(root);
+                    System.out.println("\nMaximum Height of Tree:"+(count-1));
                     break;
                 case 2:
                     System.out.println("Enter element to delete:");
@@ -385,10 +401,12 @@ public class RBTree {
                         System.out.println("\nDoes not exist!");
                     }
                     printTree(root);
-                    System.out.println("Colour Count:"+ccount);
+                    System.out.println("\nColour Count:"+ccount);
                     System.out.println("Single Rotation Count:"+(rcount-2*rdouble));
                     System.out.println("Double Rotation Count:"+rdouble);
                     System.out.println("Total Rotation Count:"+rcount);
+                    a=MaxHeight(root);
+                    System.out.println("\nMaximum Height of Tree:"+(count-1));
                     break;
                 case 3:
                     System.out.println("Enter Elemet to search:");
@@ -407,8 +425,17 @@ public class RBTree {
                     break;
                 case 5:
                     deleteTree();
+                    count=0;
+                    rcount=0;
+                    rdouble=0;
+                    ccount=0;
                     System.out.println("Tree deleted!");
                     break;
+                case 6:
+                    a=MaxHeight(root);
+                    System.out.println("\nMaximum Height of Tree:"+(count-1));
+                    break;
+                    
             }
         }
     }

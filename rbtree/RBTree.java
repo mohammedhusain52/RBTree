@@ -11,6 +11,8 @@ public class RBTree {
     int rdouble= 0;
     int search = 0;
     int count=0;
+    int probes=0;
+    int pointer=0;
     
     private class Node {
 
@@ -102,7 +104,7 @@ public class RBTree {
             Node uncle = nil;
             if (node.parent == node.parent.parent.left) {
                 uncle = node.parent.parent.right;
-
+                probes+=1;
                 if (uncle != nil && uncle.color == RED) {
                     System.out.println("Insertion Case 2 executed");
                     node.parent.color = BLACK;
@@ -110,20 +112,25 @@ public class RBTree {
                     node.parent.parent.color = RED;
                     ccount+=3;
                     node = node.parent.parent;
+                    pointer+=1;
+                    probes+=1;
                     continue;
                 } 
                 if (node == node.parent.right) {
                     System.out.println("Insertion Case 3 executed");
                     node = node.parent;
+                    pointer+=1;
                     rcount+=1;
                     flag=1;
                     rotateLeft(node);
+                    probes+=2;
                 } 
                 System.out.println("Insertion Case 4 executed");
                 node.parent.color = BLACK;
                 node.parent.parent.color = RED;
                 ccount+=2;
                 rcount+=1;
+                probes+=3;
                 if(flag == 1)
                 {
                     rdouble+=1;
@@ -139,20 +146,25 @@ public class RBTree {
                     node.parent.parent.color = RED;
                     ccount+=3;
                     node = node.parent.parent;
+                    pointer+=1;
+                    probes+=1;
                     continue;
                 }
                 if (node == node.parent.left) {
                     System.out.println("Insertion Case 3 executed");
                     node = node.parent;
+                    pointer+=1;
                     rcount+=1;
                     flag=1;
                     rotateRight(node);
+                    probes+=2;
                 }
                 System.out.println("Insertion Case 4 executed");
                 node.parent.color = BLACK;
                 node.parent.parent.color = RED;
                 ccount+=2;
                 rcount+=1;
+                probes+=3;
                 if(flag == 1)
                 {
                     rdouble+=1;
@@ -188,6 +200,7 @@ public class RBTree {
             right.parent = nil;
             root = right;
         }
+        pointer+=3;
     }
 
     void rotateRight(Node node) {
@@ -214,6 +227,7 @@ public class RBTree {
             left.parent = nil;
             root = left;
         }
+        pointer+=3;
     }
 
     //Deletes whole tree
@@ -280,12 +294,14 @@ public class RBTree {
                     rcount+=1;
                     rotateLeft(x.parent);
                     w = x.parent.right;
+                    pointer+=1;
                 }
                 if(w.left.color == BLACK && w.right.color == BLACK){
                     System.out.println("Delete FixUp Case 3.2 Executed");
                     w.color = RED;
                     ccount+=1;
                     x = x.parent;
+                    pointer+=1;
                     continue;
                 }
                 else if(w.right.color == BLACK){
@@ -296,6 +312,7 @@ public class RBTree {
                     rcount+=1;
                     rotateRight(w);
                     w = x.parent.right;
+                    pointer+=1;
                 }
                 if(w.right.color == RED){
                     System.out.println("Delete FixUp Case 3.4 Executed");
@@ -306,6 +323,7 @@ public class RBTree {
                     rcount+=1;
                     rotateLeft(x.parent);
                     x = root;
+                    pointer+=1;
                 }
             }else{
                 Node w = x.parent.left;
@@ -317,12 +335,14 @@ public class RBTree {
                     rcount+=1;
                     rotateRight(x.parent);
                     w = x.parent.left;
+                    pointer+=1;
                 }
                 if(w.right.color == BLACK && w.left.color == BLACK){
                     System.out.println("Delete FixUp Case 3.2 Executed");
                     w.color = RED;
                     ccount+=1;
                     x = x.parent;
+                    pointer+=1;
                     continue;
                 }
                 else if(w.left.color == BLACK){
@@ -333,6 +353,7 @@ public class RBTree {
                     rcount+=1;
                     rotateLeft(w);
                     w = x.parent.left;
+                    pointer+=1;
                 }
                 if(w.left.color == RED){
                     System.out.println("Delete FixUp Case 3.4 Executed");
@@ -343,6 +364,7 @@ public class RBTree {
                     rcount+=1;
                     rotateRight(x.parent);
                     x = root;
+                    pointer+=1;
                 }
             }
         }
@@ -387,6 +409,8 @@ public class RBTree {
                     System.out.println("Single Rotation Count:"+(rcount-2*rdouble));
                     System.out.println("Double Rotation Count:"+rdouble);
                     System.out.println("\nTotal Rotation Count:"+rcount);
+                    System.out.println("\nPointer Count:"+pointer);
+                    System.out.println("\nProbes Count:"+probes);
                     int a=MaxHeight(root);
                     System.out.println("\nMaximum Height of Tree:"+(count-1));
                     break;
@@ -405,6 +429,8 @@ public class RBTree {
                     System.out.println("Single Rotation Count:"+(rcount-2*rdouble));
                     System.out.println("Double Rotation Count:"+rdouble);
                     System.out.println("Total Rotation Count:"+rcount);
+                    System.out.println("\nPointer Count:"+pointer);
+                    count=0;
                     a=MaxHeight(root);
                     System.out.println("\nMaximum Height of Tree:"+(count-1));
                     break;
